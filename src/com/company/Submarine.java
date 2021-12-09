@@ -8,10 +8,6 @@ public class Submarine {
     private int horizontal;
     private int depth;
     private int aim;
-    private int gammaRate;
-    private int epsilonRate;
-    private int oxygenRating;
-    private int co2Rating;
     private int powerConsumption;
     private int LifeSupportRating;
 
@@ -21,9 +17,9 @@ public class Submarine {
     private int stringListLength;
     private List<Instruction> instructionList = new ArrayList<>();
     private int instructionListLength;
-    private List<Bingo> bingo = new ArrayList<>();
+    private final List<Bingo> bingo = new ArrayList<>();
     private List<Integer> bingoIntList = new ArrayList<>();
-    private List<Integer> bingoWonSum = new ArrayList<>();
+    private final List<Integer> bingoWonSum = new ArrayList<>();
 
 
     public Submarine(int h, int d, int aim) {
@@ -33,8 +29,8 @@ public class Submarine {
     }
 
     public void ReadGammaEpsilonRate() {
-        gammaRate = 0;
-        epsilonRate = 0;
+        int gammaRate = 0;
+        int epsilonRate = 0;
         int[] bitArray = new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
         char[] charArray = new char[12];
         for (String l : stringList) {
@@ -52,18 +48,18 @@ public class Submarine {
     }
 
     public void ReadOxygenCo2Rating() {
-        List <String> listOne = new ArrayList<String>(stringList);
-        List <String> listTwo = new ArrayList<String>(stringList);
-        oxygenRating = StripBits(listOne,0, false);
-        co2Rating = StripBits(listTwo,0, true);
+        List <String> listOne = new ArrayList<>(stringList);
+        List <String> listTwo = new ArrayList<>(stringList);
+        int oxygenRating = StripBits(listOne, 0, false);
+        int co2Rating = StripBits(listTwo, 0, true);
         LifeSupportRating = oxygenRating * co2Rating;
     }
 
     private int StripBits(List<String> list, int step, boolean isCo2) {
         if (list.size() > 1) {
             int val = 0;
-            for (int i = 0; i < list.size(); i++) {
-                val += Integer.parseInt(list.get(i).substring(step,step+1));
+            for (String s : list) {
+                val += Integer.parseInt(s.substring(step, step + 1));
             }
             char removeChar;
             if (!isCo2) {

@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Bingo {
 
-    private int[][] field;
-    private int[] sumFieldCol = {0,0,0,0,0};
-    private int[] sumFieldLin = {0,0,0,0,0};
+    private final int[][] field;
+    private final int[] sumFieldCol = {0,0,0,0,0};
+    private final int[] sumFieldLin = {0,0,0,0,0};
     private int fieldSum = 0;
     public Boolean won;
     //private List<Integer> bingoCheckList = new ArrayList<>();
