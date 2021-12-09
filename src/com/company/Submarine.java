@@ -21,7 +21,9 @@ public class Submarine {
     private int stringListLength;
     private List<Instruction> instructionList = new ArrayList<>();
     private int instructionListLength;
-
+    private List<Bingo> bingo = new ArrayList<>();
+    private List<Integer> bingoIntList = new ArrayList<>();
+    private List<Integer> bingoWonSum = new ArrayList<>();
 
 
     public Submarine(int h, int d, int aim) {
@@ -99,6 +101,48 @@ public class Submarine {
     public void ReadInstructionList(List<Instruction> instructionList) {
         this.instructionList = instructionList;
         this.instructionListLength = instructionList.size();
+    }
+
+    public void PrintIntList() {
+        for (int s : intList) {
+            System.out.println(s);
+        }
+    }
+
+    public void ReadBingoFromIntList() {
+        for (int i = 0; i < intListLength/25; i++) {
+            int [][] data = new int[25][2];
+            for (int j = 0; j < 25; j++) {
+                data[j][0] = intList.get(i*25+j);
+                data[j][1] = 0;
+            }
+            bingo.add(new Bingo(data));
+        }
+    }
+
+    public void ReadBingoListFromIntList(List<Integer> list) {
+        bingoIntList = list;
+    }
+
+    public void PlayBingo() {
+        for (int i : bingoIntList) {
+            System.out.println(i);
+            int winSum = 0;
+            for (Bingo j : bingo) {
+                if (!j.won) {
+                    j.CheckField(i);
+                    winSum = j.CheckWin(i);
+                    if (winSum > 0) {
+                        bingoWonSum.add(winSum);
+                        j.PrintField();
+                    }
+                }
+            }
+            if (bingoWonSum.size() == bingo.size()) {
+                break;
+            }
+        }
+        System.out.println(bingoWonSum.get(bingoWonSum.size()-1));
     }
 
     public int GetInstructionListLength() {

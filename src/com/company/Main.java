@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
 
-        int part = 3;
+        int part = 4;
         Submarine sub = new Submarine(0,0,0);
         FileReader file = new FileReader();
 
@@ -34,6 +34,14 @@ public class Main {
 //Part3.2
                 sub.ReadOxygenCo2Rating();
                 System.out.println("Life support rating: " + sub.GetLifeSupportRating());
+
+            case 4:
+                file.OpenFile("data4.txt");
+
+                sub.ReadIntList(file.ParseLinesToInt(1,file.GetDataLength()));
+                sub.ReadBingoListFromIntList(file.ParseSingleLineToInt(0, ","));
+                sub.ReadBingoFromIntList();
+                sub.PlayBingo();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + part);
