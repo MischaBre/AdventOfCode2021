@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class FileReader {
@@ -15,7 +17,7 @@ public class FileReader {
 
     public FileReader() {
         //init
-        data = new ArrayList<String>();
+        data = new ArrayList<>();
     }
 
     public void OpenFile(String fileName) {
@@ -34,8 +36,9 @@ public class FileReader {
         }
 
         for (int i = 0; i < data.size(); i++) {
-            if (data.get(i) == "") {
+            if (data.get(i).equals("")) {
                 data.remove(i);
+                i--;
             }
         }
 
@@ -45,7 +48,7 @@ public class FileReader {
     public int GetDataLength() { return dataLength; }
 
     public void PrintData(int maxInt) {
-        for (int i = 0; i < (maxInt < this.data.size() ? maxInt : this.data.size()); i++) {
+        for (int i = 0; i < (Math.min(maxInt, this.data.size())); i++) {
             System.out.println(this.data.get(i));
         }
     }
@@ -59,10 +62,13 @@ public class FileReader {
     }
 
     public List<Integer> ParseLinesToInt(int i, int j) {
-        List<Integer> list = new ArrayList<Integer>();
-        for (int x = i; x < j; x++) {
-            for (String s : data.get(x).split(" ")) {
-                if (s != "") { list.add(Integer.parseInt(s)); }
+        List<Integer> list = new ArrayList<>();
+        for (String s : data.subList(i,j)) {
+            if (!s.equals("")) {
+                Matcher m = Pattern.compile("[0-9]+").matcher(s);
+                while (m.find()) {
+                    list.add(Integer.parseInt(m.group(0)));
+                }
             }
         }
         return list;
@@ -73,12 +79,12 @@ public class FileReader {
     }
 
     public List<Integer> ParseBinaryDataToInt() {
-        List<Integer> list = new ArrayList<Integer>();
-        for (int i = 0; i < this.data.size(); i++) {
+        List<Integer> list = new ArrayList<>();
+        for (String datum : this.data) {
             int val = 0;
-            for (char c : data.get(i).toCharArray()) {
+            for (char c : datum.toCharArray()) {
                 val <<= 1;
-                val += c-'0';
+                val += c - '0';
             }
             list.add(val);
         }
@@ -90,12 +96,10 @@ public class FileReader {
     }
 
     public List<Instruction> ParseDataToInstruction() {
-        List<Instruction> list = new ArrayList<Instruction>();
-        String[] line = new String[2];
-        for (int i = 0; i < this.data.size(); i++) {
-            line = this.data.get(i).split(" ");
-            //Instruction instruction = new Instruction("",0);
-            //instruction.SetInstruction(line[0], Integer.parseInt(line[1]));
+        List<Instruction> list = new ArrayList<>();
+        String[] line;
+        for (String datum : this.data) {
+            line = datum.split(" ");
             list.add(new Instruction(line[0], Integer.parseInt(line[1])));
         }
         return list;

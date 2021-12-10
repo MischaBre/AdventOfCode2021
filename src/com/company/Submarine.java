@@ -29,8 +29,8 @@ public class Submarine {
     }
 
     public void ReadGammaEpsilonRate() {
-        int gammaRate = 0;
-        int epsilonRate = 0;
+        int gammaRate;
+        int epsilonRate;
         int[] bitArray = new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
         char[] charArray = new char[12];
         for (String l : stringList) {
@@ -87,6 +87,30 @@ public class Submarine {
     public void ReadStringList(List<String> stringList) {
         this.stringList = stringList;
         this.stringListLength = stringList.size();
+    }
+
+    public int CheckNavigationStringList() {
+        int sum = 0;
+        for (String s : stringList) {
+            for (int i = 0; i < s.length(); i++) {
+                char t = s.charAt(i);
+                if (t == ')' | t == '}' | t == ']' | t == '>') {
+                    if (Math.abs(t - s.charAt(i-1)) < 3) {
+                        s = s.substring(0,i-1) + s.substring(i+1);
+                        i-=2;
+                    } else {
+                        switch (t) {
+                            case ')' -> sum += 3;
+                            case ']' -> sum += 57;
+                            case '}' -> sum += 1197;
+                            case '>' -> sum += 25137;
+                        }
+                        i = s.length();
+                    }
+                }
+            }
+        }
+        return sum;
     }
 
     public void ReadIntList(List<Integer> intList) {

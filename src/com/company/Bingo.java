@@ -1,6 +1,5 @@
 package com.company;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bingo {
@@ -10,8 +9,6 @@ public class Bingo {
     private final int[] sumFieldLin = {0,0,0,0,0};
     private int fieldSum = 0;
     public Boolean won;
-    //private List<Integer> bingoCheckList = new ArrayList<>();
-    private List<Integer> bingoList = new ArrayList<>();
 
     public Bingo(int[][] field) {
         this.field = field;
@@ -22,7 +19,7 @@ public class Bingo {
     }
 
     public void ReadBingoList(List<Integer> list) {
-        bingoList = list;
+        //private List<Integer> bingoCheckList = new ArrayList<>();
     }
 
     public void PrintField() {

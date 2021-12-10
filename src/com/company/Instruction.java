@@ -36,19 +36,12 @@ public class Instruction {
     }
 
     public int[] TranslateInstruction() {
-        switch (this.operation) {
-            case "up":
-                return new int[] {0,-value};
-
-            case "down":
-                return new int[] {0,value};
-
-            case "forward":
-                return new int[] {value,0};
-
-            default:
-                throw new IllegalStateException("Unexpected value: " + this.operation);
-        }
+        return switch (this.operation) {
+            case "up" -> new int[]{0, -value};
+            case "down" -> new int[]{0, value};
+            case "forward" -> new int[]{value, 0};
+            default -> throw new IllegalStateException("Unexpected value: " + this.operation);
+        };
     }
 
 }

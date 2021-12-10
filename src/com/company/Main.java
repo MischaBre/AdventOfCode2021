@@ -1,14 +1,11 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
 
     public static void main(String[] args) {
 	// write your code here
 
-        int part = 4;
+        int part = 10;
         Submarine sub = new Submarine(0,0,0);
         FileReader file = new FileReader();
 
@@ -43,6 +40,13 @@ public class Main {
                 sub.ReadBingoFromIntList();
                 sub.PlayBingo();
                 break;
+
+            case 10:
+                file.OpenFile("data10.txt");
+                sub.ReadStringList(file.ParseDataToString());
+                System.out.println(sub.CheckNavigationStringList());
+                break;
+
             default:
                 throw new IllegalStateException("Unexpected value: " + part);
         }
