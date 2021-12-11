@@ -84,11 +84,6 @@ public class Submarine {
         return powerConsumption;
     }
 
-    public void ReadStringList(List<String> stringList) {
-        this.stringList = stringList;
-        this.stringListLength = stringList.size();
-    }
-
     public int CheckNavigationStringList() {
         int sum = 0;
         for (String s : stringList) {
@@ -111,6 +106,60 @@ public class Submarine {
             }
         }
         return sum;
+    }
+
+    public Long CorrectNavigationStringList() {
+        List<Long> sumList = new ArrayList<>();
+        for (int index = 0; index < stringList.size(); index++) {
+            String s = stringList.get(index);
+            for (int i = 0; i < s.length(); i++) {
+                char t = s.charAt(i);
+                if (t == ')' | t == '}' | t == ']' | t == '>') {
+                    if (Math.abs(t - s.charAt(i-1)) < 3) {
+                        s = s.substring(0,i-1) + s.substring(i+1);
+                        i-=2;
+                    } else {
+                        stringList.remove(index);
+                        index--;
+                        s = "";
+                        break;
+                    }
+                }
+            }
+            if (!s.isEmpty()) {
+                s = AddBrackets(s);
+                sumList.add(CountClosingBrackets(s));
+                stringList.set(index, s);
+            }
+        }
+        return sumList.stream().sorted().toList().get(sumList.size()/2);
+    }
+
+    private String AddBrackets(String s) {
+        String t = s.replace('(', ')');
+        t = t.replace('{', '}');
+        t = t.replace('[', ']');
+        t = t.replace('<', '>');
+        return s + new StringBuilder(t).reverse();
+    }
+
+    private long CountClosingBrackets(String s) {
+        long sum = 0;
+        String t = s.substring(s.length()/2);
+        for (char c : t.toCharArray()) {
+            switch (c) {
+                case ')' -> sum = sum * 5 + 1;
+                case ']' -> sum = sum * 5 + 2;
+                case '}' -> sum = sum * 5 + 3;
+                case '>' -> sum = sum * 5 + 4;
+            }
+        }
+        return sum;
+    }
+
+    public void ReadStringList(List<String> stringList) {
+        this.stringList = stringList;
+        this.stringListLength = stringList.size();
     }
 
     public void ReadIntList(List<Integer> intList) {

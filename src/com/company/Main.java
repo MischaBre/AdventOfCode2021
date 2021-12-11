@@ -44,7 +44,8 @@ public class Main {
             case 10:
                 file.OpenFile("data10.txt");
                 sub.ReadStringList(file.ParseDataToString());
-                System.out.println(sub.CheckNavigationStringList());
+                System.out.println(sub.CheckNavigationStringList());    //part1
+                System.out.println(sub.CorrectNavigationStringList());  //part2
                 break;
 
             default:
