@@ -91,6 +91,18 @@ public class FileReader {
         return list;
     }
 
+    public int[] ParseSingleDigitsIntToArray() {
+        int index = 0;
+        int[] array = new int[100];
+        for (String s : data) {
+            for (char c : s.toCharArray()) {
+                array[index] = Integer.parseInt(String.valueOf(c));
+                index++;
+            }
+        }
+        return array;
+    }
+
     public List<String> ParseDataToString() {
         return this.data;
     }

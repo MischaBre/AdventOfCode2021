@@ -5,8 +5,9 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
 
-        int part = 10;
+        int part = 11;
         Submarine sub = new Submarine(0,0,0);
+
         FileReader file = new FileReader();
 
         switch (part) {
@@ -39,7 +40,6 @@ public class Main {
                 sub.ReadBingoListFromIntList(file.ParseSingleLineToInt(0, ","));
                 sub.ReadBingoFromIntList();
                 sub.PlayBingo();
-                break;
 
             case 10:
                 file.OpenFile("data10.txt");
@@ -48,6 +48,13 @@ public class Main {
                 System.out.println(sub.CorrectNavigationStringList());  //part2
                 break;
 
+            case 11:
+                file.OpenFile("data11.txt");
+                OctopusGrid octogrid = new OctopusGrid(file.ParseSingleDigitsIntToArray());
+                octogrid.PrintGrid();
+                octogrid.AdvanceStepUntil(1000);
+                octogrid.PrintGrid();
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + part);
         }
