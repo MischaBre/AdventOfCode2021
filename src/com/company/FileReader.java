@@ -1,13 +1,12 @@
 package com.company;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static java.util.Comparator.naturalOrder;
 
 public class FileReader {
 
@@ -105,6 +104,53 @@ public class FileReader {
 
     public List<String> ParseDataToString() {
         return this.data;
+    }
+
+    public List<Cave> ParseDataToCave(String reg) {
+        List<Cave> list = new ArrayList<>();
+        for (String l : data) {
+            String[] result = l.split(reg);
+            for (String r : result) {
+                boolean exists = false;
+                for (Cave c : list) {
+                    if (!exists) {
+                        exists = (c.name.equals(r));
+                    }
+                }
+                if (!exists) {
+                    list.add(new Cave(r, r.charAt(0) < 97, r.equals("start"), r.equals("end")));
+                }
+            }
+        }
+        return list;
+    }
+
+    public List<Line> ParseDataToLine(String reg, List<Cave> caveList) {
+        List<Line> list = new ArrayList<>();
+        for (String l : data) {
+            String[] result = l.split(reg);
+            Cave fromCave = caveList.get(0);
+            Cave toCave = caveList.get(0);
+            for (Cave c : caveList) {
+                if (c.name.equals(result[0])) {
+                    fromCave = c;
+                }
+                if (c.name.equals(result[1])) {
+                    toCave = c;
+                }
+            }
+            list.add(new Line(fromCave, toCave));
+        }
+        return list;
+    }
+
+    public List<Cave> ParseLineListToCaveList(List<Line> lineList) {
+        List<Cave> caveList = new ArrayList<>();
+        for (Line l : lineList) {
+            caveList.add(l.fromCave);
+            caveList.add(l.toCave);
+        }
+        return new ArrayList<>(new HashSet<>(caveList));
     }
 
     public List<Instruction> ParseDataToInstruction() {
