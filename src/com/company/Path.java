@@ -12,7 +12,7 @@ public class Path {
 
     public void PrintPath() {
         for (Cave p : path) {
-            System.out.print(!p.isEnd ? p.name + " -> " : "End%n");
+            System.out.printf(!p.isEnd ? p.name + " -> " : "End%n");
         }
     }
 }

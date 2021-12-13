@@ -10,13 +10,15 @@ public class Routing {
     private Cave startCave;
     private Cave endCave;
     private int maxVisits;
+    private boolean firstVisitHigher;
     private Path currentPath;
     private List<Path> pathList = new ArrayList<>();
 
-    public Routing(List<Cave> caveList, List<Line> lineList, int maxVisits) {
+    public Routing(List<Cave> caveList, List<Line> lineList, int maxVisits, boolean firstVisitHigher) {
         this.caveList = caveList;
         this.lineList = lineList;
         this.maxVisits = maxVisits;
+        this.firstVisitHigher = firstVisitHigher;
         for (Cave c : this.caveList) {
             if (c.isStart) { startCave = c; }
             if (c.isEnd) { endCave = c; }
@@ -63,7 +65,7 @@ public class Routing {
                         if (visits+isFirst > maxVisits) {
                             return true;
                         }
-                        if (visits == maxVisits && isFirst == 0) {
+                        if (visits == maxVisits && isFirst == 0 && firstVisitHigher) {
                             isFirst++;
                         }
                     }

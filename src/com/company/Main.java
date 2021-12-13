@@ -61,7 +61,7 @@ public class Main {
                 file.OpenFile("data12.txt");
                 List<Cave> caveList = new ArrayList<>(file.ParseDataToCave("-"));
                 List<Line> lineList = new ArrayList<>(file.ParseDataToLine("-",caveList));
-                Routing routing = new Routing(caveList, lineList, 2);
+                Routing routing = new Routing(caveList, lineList, 1, false);
                 routing.StartSearch();
                 break;
             default:
