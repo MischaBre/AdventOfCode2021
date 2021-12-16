@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
 
-        int part = 12;
+        int part = 15;
         Submarine sub = new Submarine(0,0,0);
 
         FileReader file = new FileReader();
@@ -64,6 +64,14 @@ public class Main {
                 Routing routing = new Routing(caveList, lineList, 1, false);
                 routing.StartSearch();
                 break;
+            case 15:
+                file.OpenFile("data15.txt");
+                List<Integer> intList = new ArrayList<>(file.ParseLinesToSingleInt(0,file.GetDataLength()));
+                AStar caveNodes = new AStar(100);
+                caveNodes.SetPenalty(intList);
+                caveNodes.PrintNodes();
+                caveNodes.FindRoute();
+
             default:
                 throw new IllegalStateException("Unexpected value: " + part);
         }

@@ -73,6 +73,19 @@ public class FileReader {
         return list;
     }
 
+    public List<Integer> ParseLinesToSingleInt(int i, int j) {
+        List<Integer> list = new ArrayList<>();
+        for (String s : data.subList(i,j)) {
+            if (!s.equals("")) {
+                Matcher m = Pattern.compile("[0-9]").matcher(s);
+                while (m.find()) {
+                    list.add(Integer.parseInt(m.group(0)));
+                }
+            }
+        }
+        return list;
+    }
+
     public List<Integer> ParseDataToInt() {
         return data.stream().map(num -> Integer.parseInt(num.trim())).collect(Collectors.toList());
     }
