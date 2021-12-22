@@ -119,6 +119,18 @@ public class FileReader {
         return this.data;
     }
 
+    public String ParseSingleDataToString(int line) {
+        return data.get(line);
+    }
+
+    public char[][] ParseDataToChar(int from, int to, int size) {
+        char[][] charArray = new char[size][size];
+        for (int i = from; i < to; i++) {
+            charArray[i-from] = data.get(i).toCharArray();
+        }
+        return charArray;
+    }
+
     public List<Cave> ParseDataToCave(String reg) {
         List<Cave> list = new ArrayList<>();
         for (String l : data) {

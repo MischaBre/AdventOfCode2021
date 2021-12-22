@@ -8,10 +8,46 @@ public class Main {
     public static void main(String[] args) {
 	// write your code here
 
-        int part = 15;
+        Part20(false);
+
+    }
+
+    private static void Part20(boolean isTest) {
+        FileReader file = new FileReader();
+        String filename = isTest ? "data20test.txt" : "data20.txt";
+        file.OpenFile(filename);
+        int size = 100;
+
+        TrenchMap image = new TrenchMap(size);
+        image.LoadAlgorithm(file.ParseSingleDataToString(0));
+        image.LoadImage(file.ParseDataToChar(1, size+1 ,size));
+        image.CountPixels();
+        image.PrintImage();
+
+        for (int i = 0; i < 2; i++) {
+            image.EnhanceStep();
+            image.PrintImage();
+        }
+        image.CountPixels();
+    }
+
+    private static char[][] GenerateTestImage(int size) {
+        char[][] image = new char[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                image[i][j] = (int)(Math.random()*2.0) < 1 ? '#' : '.';
+            }
+        }
+        return image;
+    }
+
+
+    private void OldParts() {
         Submarine sub = new Submarine(0,0,0);
 
         FileReader file = new FileReader();
+
+        int part = 15;
 
         switch (part) {
             case 1:
@@ -66,19 +102,16 @@ public class Main {
                 break;
             case 15:
                 file.OpenFile("data15.txt");
+                int size;
                 List<Integer> intList = new ArrayList<>(file.ParseLinesToSingleInt(0,file.GetDataLength()));
-                AStar caveNodes = new AStar(100);
+                size = (int) Math.sqrt(intList.size());
+                AStar caveNodes = new AStar(size);
                 caveNodes.SetPenalty(intList);
-                caveNodes.PrintNodes();
                 caveNodes.FindRoute();
-
+                caveNodes.PrintNodes();
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + part);
         }
-
-
-
-
     }
-
 }

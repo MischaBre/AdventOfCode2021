@@ -1,16 +1,16 @@
 package com.company;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
 public class AStar {
 
     public List<AStarNode> nodes;
-    private List<AStarNode> openNodes;
-    private List<AStarNode> closedNodes;
-    private int size;
+    private final List<AStarNode> openNodes;
+    private final List<AStarNode> closedNodes;
+    private final List<AStarNode> path = new ArrayList<>();
+    private final int size;
 
     public AStar(int size) {
         nodes = new ArrayList<>();
@@ -26,8 +26,10 @@ public class AStar {
     }
 
     public void PrintNodes() {
+        AStarNode node;
         for (int i = 0; i < size*size; i++) {
-            System.out.printf(nodes.get(i).penalty + (i % size == size-1 ? "%n" : " "));
+            node = nodes.get(i);
+            System.out.printf((path.contains(node) ? "_" : nodes.get(i).penalty) + (i % size == size-1 ? "%n" : ""));
         }
     }
 
@@ -63,7 +65,7 @@ public class AStar {
     }
 
     private void RetracePath() {
-        List<AStarNode> path = new ArrayList<>();
+
         int sum = 0;
         AStarNode currentNode = nodes.get(size*size-1);
 
@@ -74,15 +76,9 @@ public class AStar {
 
         for (AStarNode node : path) {
             sum += node.penalty;
-            System.out.println(node.penalty);
+            //System.out.println(node.penalty);
         }
         System.out.println("Summe: " + sum);
-    }
-
-    private int GetDistance(AStarNode a, AStarNode b) {
-        int indexA = nodes.indexOf(a);
-        int indexB = nodes.indexOf(b);
-        return Math.abs(indexB % size - indexA % size) + Math.abs(indexB / size - indexA / size);
     }
 
     private AStarNode FindMinNode(List<AStarNode> nodes) {
